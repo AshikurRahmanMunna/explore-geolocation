@@ -1,4 +1,5 @@
 const display = document.getElementById("display");
+const watchDisplay = document.getElementById("watchDisplay");
 const getLocation = () => {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(showPosition, showError);
@@ -26,4 +27,16 @@ function showError(error) {
       display.innerHTML = "An unknown error occurred.";
       break;
   }
+}
+
+function watchPosition() {
+  if (navigator.geolocation) {
+    navigator.geolocation.watchPosition(showWatchPosition, showError);
+  } else {
+    display.innerHTML = "getLocation is not available";
+  }
+}
+function showWatchPosition(position) {
+  watchDisplay.style.color = "green";
+  watchDisplay.innerHTML = `Latitude: ${position.coords.latitude} <br /> Longitude: ${position.coords.longitude}<br /> Accuracy: ${position.coords.accuracy}<br /> Altitude: ${position.coords.altitude}<br /> Altitude Accuracy: ${position.coords.altitudeAccuracy}<br /> Heading to the north: ${position.coords.heading}<br /> Speed: ${position.coords.speed}<br /><br /> Timestamp: ${position.timestamp}`;
 }
